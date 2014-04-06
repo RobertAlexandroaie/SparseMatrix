@@ -14,7 +14,7 @@ public class App {
 //	int rowTest = 15418;
 //	int colTest = 21508;
 	String filename = "test.txt";
-	filename = "m_rar_2014_2.txt";
+	filename = "m_rar_2014_3.txt";
 	
 	GaussSeidel system = new GaussSeidel(filename);
 	long start = System.currentTimeMillis();
@@ -22,7 +22,9 @@ public class App {
 	long stop = System.currentTimeMillis();
 	
 	System.out.println(1.0 * (stop - start) / 1000);
-	System.out.println(sol.get(2));
+	//System.out.println(sol.get(2));
 	System.out.println(system.verifySolution());
+	
+	double[][] vals = system.getMatrixA().asArray();
     }
 }

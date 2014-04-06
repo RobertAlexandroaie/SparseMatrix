@@ -256,7 +256,7 @@ public class DoubleSparseMatrix implements SparseMatrix {
 		String vals[] = line.split("\\|");
 		int index = Integer.parseInt(vals[0]);
 		int row = Integer.parseInt(vals[1]);
-		result[row][index] = values.get(index);
+		result[row][col] = values.get(index);
 	    }
 	    
 	}
