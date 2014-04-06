@@ -1,0 +1,24 @@
+#surefire
+#Tue Apr 01 12:02:56 EEST 2014
+testClassesDirectory=D\:\\Dropbox\\Developing Data\\Eclipse Workspace\\SparseMatrix\\target\\test-classes
+classPathUrl.2=D\:\\Dropbox\\Developing Tools\\apache-maven-3.2.1\\repository\\junit\\junit\\3.8.1\\junit-3.8.1.jar
+useManifestOnlyJar=true
+classPathUrl.1=D\:\\Dropbox\\Developing Data\\Eclipse Workspace\\SparseMatrix\\target\\classes
+reportsDirectory=D\:\\Dropbox\\Developing Data\\Eclipse Workspace\\SparseMatrix\\target\\surefire-reports
+classPathUrl.0=D\:\\Dropbox\\Developing Data\\Eclipse Workspace\\SparseMatrix\\target\\test-classes
+providerConfiguration=org.apache.maven.surefire.junit.JUnit3Provider
+testSuiteDefinitionTestSourceDirectory=D\:\\Dropbox\\Developing Data\\Eclipse Workspace\\SparseMatrix\\src\\test\\java
+surefireClassPathUrl.1=D\:\\Dropbox\\Developing Tools\\apache-maven-3.2.1\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.12.4\\surefire-api-2.12.4.jar
+surefireClassPathUrl.0=D\:\\Dropbox\\Developing Tools\\apache-maven-3.2.1\\repository\\org\\apache\\maven\\surefire\\surefire-junit3\\2.12.4\\surefire-junit3-2.12.4.jar
+runOrder=filesystem
+useSystemClassLoader=true
+excludes0=**/*$*
+isTrimStackTrace=true
+tc.0=com.fii.homework.SparseMatrix.AppTest
+enableAssertions=true
+includes2=**/*TestCase.java
+failIfNoTests=false
+includes1=**/*Test.java
+runStatisticsFile=D\:\\Dropbox\\Developing Data\\Eclipse Workspace\\SparseMatrix\\.surefire-49EF4840D1766DFB12382656C22D5CABA7FEA083
+includes0=**/Test*.java
+childDelegation=false
