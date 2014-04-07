@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.fii.homework.SparseMatrix.models.DoubleSparseMatrix;
 import com.fii.homework.SparseMatrix.models.interfaces.SparseMatrix;
 
 /**
@@ -168,28 +167,30 @@ public class MatrixOpUtils {
 		throw new NullPointerException();
 	    }
 	    
-	    ArrayList<ArrayList<Integer>> resultRowIndexes = new ArrayList<ArrayList<Integer>>();
-	    ArrayList<ArrayList<String>> resultColIndexes = new ArrayList<ArrayList<String>>();
-	    ArrayList<Double> resultValues = VectorOpUtils.getClone(a.getValues(), Double.class);
-	    Collections.fill(resultValues, 0.0);
-	    ArrayList<Double> resultDiag = new ArrayList<Double>();
 	    int size = a.getSize();
 	    
-	    result = new DoubleSparseMatrix(resultRowIndexes, resultColIndexes, resultValues, resultDiag, size);
+	    result = MatrixBuildUtil.buildEmptySparseMatrix(size);
 	    
 	    ArrayList<ArrayList<Integer>> aRowIndexes = getClone(a.getRowIndexes(), Integer.class);
 	    
 	    for (int row = 0; row < size; row++) {
 		ArrayList<Integer> rowInRowIndexes = aRowIndexes.get(row);
-		T elem = MatrixBuildUtil.getNeutralSumElem(type);
-		elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(row, row), (T) b.getElement(row, row), type), type);
 		
 		for (int colOfElemInB = 0; colOfElemInB < size; colOfElemInB++) {
+		    T elem = MatrixBuildUtil.getNeutralSumElem(type);
+		    T elOfA = (T) a.getElement(row, row);
+		    T elOfB = (T) b.getElement(row, colOfElemInB);
+		    elem = ElementOpUtils.sum(elem, ElementOpUtils.mul(elOfA, elOfB, type), type);
+		    
 		    for (Integer col : rowInRowIndexes) {
-			elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(row, col), (T) b.getElement(col, colOfElemInB), type),
-				type);
+			elOfA = (T) a.getElement(row, col);
+			elOfB = (T) b.getElement(col, colOfElemInB);
+			if (((Double) elOfB).doubleValue() != 0.0) {
+			    elem = ElementOpUtils.sum(elem, ElementOpUtils.mul(elOfA, elOfB, type), type);
+			}
 		    }
 		    result.setElement(row, colOfElemInB, (Double) elem);
+		    elem = MatrixBuildUtil.getNeutralSumElem(type);
 		}
 	    }
 	    return result;

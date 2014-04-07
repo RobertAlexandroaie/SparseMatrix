@@ -83,6 +83,24 @@ public class MatrixBuildUtil {
 	}
     }
     
+    public static SparseMatrix buildEmptySparseMatrix(int size) {
+	SparseMatrix result = null;
+	
+	ArrayList<ArrayList<Integer>> resultRowIndexes = new ArrayList<ArrayList<Integer>>();
+	ArrayList<ArrayList<String>> resultColIndexes = new ArrayList<ArrayList<String>>();
+	ArrayList<Double> resultValues = new ArrayList<Double>();
+	ArrayList<Double> resultDiag = new ArrayList<Double>();
+	
+	for (int i = 0; i < size; i++) {
+	    resultRowIndexes.add(null);
+	    resultColIndexes.add(null);
+	    resultDiag.add(0.0);
+	}
+	result = new DoubleSparseMatrix(resultRowIndexes, resultColIndexes, resultValues, resultDiag, size);
+	
+	return result;
+    }
+    
     public static void buildSystemFromFile(String filename, GaussSeidel system) {
 	ArrayList<ArrayList<Integer>> rowIndexes = null;
 	ArrayList<ArrayList<String>> colIndexes = null;

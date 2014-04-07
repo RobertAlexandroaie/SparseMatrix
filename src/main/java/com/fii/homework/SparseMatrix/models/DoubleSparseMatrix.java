@@ -31,7 +31,7 @@ public class DoubleSparseMatrix implements SparseMatrix {
 	this.size = size;
     }
     
-    public DoubleSparseMatrix(DoubleSparseMatrix b) {
+    public DoubleSparseMatrix(SparseMatrix b) {
 	colIndexes = MatrixOpUtils.getClone(b.getColIndexes(), String.class);
 	rowIndexes = MatrixOpUtils.getClone(b.getRowIndexes(), Integer.class);
 	size = b.getSize();
@@ -197,19 +197,21 @@ public class DoubleSparseMatrix implements SparseMatrix {
      */
     @Override
     public boolean setElement(int row, int column, double value) {
+	boolean added = false;
 	if (row == column) {
 	    diag.set(row, value);
 	    return true;
 	} else {
-//	    TODO fix setElement
 	    ArrayList<Integer> rowInRowIndexes = rowIndexes.get(row);
 	    ArrayList<String> rowInColIndexes = colIndexes.get(column);
 	    if (rowInRowIndexes == null) {
 		rowInRowIndexes = new ArrayList<Integer>();
 		rowInRowIndexes.add(row);
+		rowIndexes.set(row, rowInRowIndexes);
 		if (rowInColIndexes == null) {
 		    rowInColIndexes = new ArrayList<String>();
 		    rowInColIndexes.add(values.size() + "|" + row);
+		    colIndexes.set(column, rowInColIndexes);
 		    values.add(value);
 		    return true;
 		} else {
@@ -217,14 +219,24 @@ public class DoubleSparseMatrix implements SparseMatrix {
 			if (line.endsWith("|" + row)) {
 			    int indexOfVal = Integer.parseInt(line.split("\\|")[0]);
 			    values.set(indexOfVal, value);
+			    added = true;
 			    return true;
 			}
 		    }
+		    if (!added) {
+			rowInColIndexes.add(values.size() + "|" + row);
+			values.add(value);
+			added = true;
+		    }
 		}
 	    } else {
+		if (!rowInRowIndexes.contains(column)) {
+		    rowInRowIndexes.add(column);
+		}
 		if (rowInColIndexes == null) {
 		    rowInColIndexes = new ArrayList<String>();
 		    rowInColIndexes.add(values.size() + "|" + row);
+		    colIndexes.set(column, rowInColIndexes);
 		    values.add(value);
 		    return true;
 		} else {
@@ -232,8 +244,14 @@ public class DoubleSparseMatrix implements SparseMatrix {
 			if (line.endsWith("|" + row)) {
 			    int indexOfVal = Integer.parseInt(line.split("\\|")[0]);
 			    values.set(indexOfVal, value);
+			    added = true;
 			    return true;
 			}
+		    }
+		    if (!added) {
+			rowInColIndexes.add(values.size() + "|" + row);
+			values.add(value);
+			added = true;
 		    }
 		}
 	    }
