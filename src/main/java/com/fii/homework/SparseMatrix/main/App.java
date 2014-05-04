@@ -2,10 +2,6 @@
 package com.fii.homework.SparseMatrix.main;
 
 
-import com.fii.homework.SparseMatrix.models.GaussSeidel;
-import com.fii.homework.SparseMatrix.models.SngDecompMatrix;
-import com.fii.homework.SparseMatrix.models.interfaces.SparseMatrix;
-import com.fii.homework.SparseMatrix.utils.MatrixOpUtils;
 import com.fii.homework.SparseMatrix.utils.PowerMethodHelper;
 import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 
