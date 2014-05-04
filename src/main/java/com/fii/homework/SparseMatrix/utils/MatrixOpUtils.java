@@ -61,7 +61,7 @@ public class MatrixOpUtils {
 	    for (int i = 0; i < rows; i++) {
 		ArrayList<T> row = new ArrayList<>();
 		for (int j = 0; j < columns; j++) {
-		    T elem = MatrixBuildUtil.getNeutralSumElem(type);
+		    T elem = ElementOpUtils.getNeutralSumElem(type);
 		    for (int k = 0; k < common; k++) {
 			elem = ElementOpUtils.sum(elem, ElementOpUtils.mul(a.get(i).get(k), b.get(k).get(j), type), type);
 		    }
@@ -138,7 +138,7 @@ public class MatrixOpUtils {
 	    for (int i = 0; i < size; i++) {
 		ArrayList<Integer> row = rowIndexes.get(i);
 		ArrayList<T> rowToAdd = new ArrayList<>();
-		T elem = MatrixBuildUtil.getNeutralSumElem(type);
+		T elem = ElementOpUtils.getNeutralSumElem(type);
 		elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(i, i), (T) b.get(i).get(0), type), type);
 		for (Integer k : row) {
 		    elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(i, k), (T) b.get(i).get(0), type), type);
@@ -177,7 +177,7 @@ public class MatrixOpUtils {
 		ArrayList<Integer> rowInRowIndexes = aRowIndexes.get(row);
 		
 		for (int colOfElemInB = 0; colOfElemInB < size; colOfElemInB++) {
-		    T elem = MatrixBuildUtil.getNeutralSumElem(type);
+		    T elem = ElementOpUtils.getNeutralSumElem(type);
 		    T elOfA = (T) a.getElement(row, row);
 		    T elOfB = (T) b.getElement(row, colOfElemInB);
 		    elem = ElementOpUtils.sum(elem, ElementOpUtils.mul(elOfA, elOfB, type), type);
@@ -190,7 +190,7 @@ public class MatrixOpUtils {
 			}
 		    }
 		    result.setElement(row, colOfElemInB, (Double) elem);
-		    elem = MatrixBuildUtil.getNeutralSumElem(type);
+		    elem = ElementOpUtils.getNeutralSumElem(type);
 		}
 	    }
 	    return result;

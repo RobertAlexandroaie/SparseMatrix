@@ -233,53 +233,15 @@ public class MatrixBuildUtil {
 	return CMatrix;
     }
     
-    @SuppressWarnings("unchecked")
-    public static <T extends Number> T getNeutralSumElem(Class<T> type) {
-	switch (type.getSimpleName()) {
-	    case "Double":
-		return (T) (new Double(0.0));
-	    case "Float":
-		return (T) (new Float(0.0));
-	    case "Byte":
-		return (T) (new Byte((byte) 0));
-	    case "Short":
-		return (T) (new Short((short) 0));
-	    case "Integer":
-		return (T) (new Integer(0));
-	    case "Long":
-		return (T) (new Long(0));
-	}
-	return null;
-    }
-    
-    @SuppressWarnings("unchecked")
-    public static <T extends Number> T getNeutralMulElem(Class<T> type) {
-	switch (type.getSimpleName()) {
-	    case "Double":
-		return (T) (new Double(1.0));
-	    case "Float":
-		return (T) (new Float(1.0));
-	    case "Byte":
-		return (T) (new Byte((byte) 1));
-	    case "Short":
-		return (T) (new Short((short) 1));
-	    case "Integer":
-		return (T) (new Integer(1));
-	    case "Long":
-		return (T) (new Long(1));
-	}
-	return null;
-    }
-    
     public static <T extends Number> ArrayList<ArrayList<T>> getIn(int n, Class<T> type) {
 	ArrayList<ArrayList<T>> In = new ArrayList<ArrayList<T>>();
 	for (int i = 0; i < n; i++) {
 	    ArrayList<T> row = new ArrayList<T>();
 	    for (int j = 0; j < n; j++) {
 		if (i != j) {
-		    row.add(getNeutralSumElem(type));
+		    row.add(ElementOpUtils.getNeutralSumElem(type));
 		} else {
-		    row.add(getNeutralMulElem(type));
+		    row.add(ElementOpUtils.getNeutralMulElem(type));
 		}
 	    }
 	    In.add(row);

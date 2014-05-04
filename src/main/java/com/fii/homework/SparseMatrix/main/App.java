@@ -6,28 +6,20 @@ import com.fii.homework.SparseMatrix.models.GaussSeidel;
 import com.fii.homework.SparseMatrix.models.SngDecompMatrix;
 import com.fii.homework.SparseMatrix.models.interfaces.SparseMatrix;
 import com.fii.homework.SparseMatrix.utils.MatrixOpUtils;
+import com.fii.homework.SparseMatrix.utils.PowerMethodHelper;
+import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 
 /**
  * @author Robert
  */
 public class App {
     public static void main(String[] args) {
-//	int rowTest = 15418;
-//	int colTest = 21508;
-	String filename = "test.txt";
-	
-	filename = "m_rar_2014_5.txt";
-	GaussSeidel system = new GaussSeidel(filename);
-        SparseMatrix A = system.getMatrixA();
-        SparseMatrix B = system.getMatrixB();
-        MatrixOpUtils.addInToSparseMatrix(B);
         
-        SparseMatrix C = MatrixOpUtils.mulSparseMatrixWithSparseMatrix(A, B, Double.class);
-        System.out.println(C);
-        int n = 5, p = 5;
-	
-	SngDecompMatrix matrix = new SngDecompMatrix(n, p);
-	matrix.generateSystem();
-	matrix.computeXI();
+        PowerMethodHelper pmHelper = new PowerMethodHelper();
+        pmHelper.generateSquareSymmetricAndSparseMatrix(10);
+        if(pmHelper.getMatrix().isSymmetric()) {
+            System.out.println("Matricea este simetrica");
+        }
+        System.out.println(VectorOpUtils.getEuclidianNorm(pmHelper.getRandomVector(), Double.class));
     }
 }
