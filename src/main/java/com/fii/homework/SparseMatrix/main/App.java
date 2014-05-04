@@ -21,5 +21,6 @@ public class App {
             System.out.println("Matricea este simetrica");
         }
         System.out.println(VectorOpUtils.getEuclidianNorm(pmHelper.getRandomVector(), Double.class));
+        
     }
 }
