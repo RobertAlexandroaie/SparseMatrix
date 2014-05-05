@@ -2,7 +2,7 @@
 package com.fii.homework.SparseMatrix.main;
 
 
-import com.fii.homework.SparseMatrix.utils.PowerMethodHelper;
+import com.fii.homework.SparseMatrix.models.PowerMethod;
 import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 
 /**
@@ -11,7 +11,7 @@ import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 public class App {
     public static void main(String[] args) {
         
-        PowerMethodHelper pmHelper = new PowerMethodHelper();
+        PowerMethod pmHelper = new PowerMethod();
         pmHelper.generateSquareSymmetricAndSparseMatrix(10);
         if(pmHelper.getMatrix().isSymmetric()) {
             System.out.println("Matricea este simetrica");
