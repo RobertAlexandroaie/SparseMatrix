@@ -68,9 +68,9 @@ public class SngDecompMatrix {
 		matrix.set(idx, jdx, value);
 	    }
 	}
-        for(int jdx = 0 ;jdx < nrColumns; jdx++) {
-            matrix.set(1,jdx , matrix.get(0,jdx));
-        }
+	for (int jdx = 0; jdx < nrColumns; jdx++) {
+	    matrix.set(1, jdx, matrix.get(0, jdx));
+	}
     }
     
     private void generateB() {

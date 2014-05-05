@@ -18,6 +18,10 @@ import javax.swing.border.EmptyBorder;
  */
 public class MainFrame extends JFrame {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private final JPanel contentPane;
     
     /**
