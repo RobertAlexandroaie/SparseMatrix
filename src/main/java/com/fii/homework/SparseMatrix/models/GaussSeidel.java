@@ -19,6 +19,7 @@ public class GaussSeidel {
     private SparseMatrix matrixA;
     private SparseMatrix matrixB;
     private SparseMatrix matrixC;
+    //asda
     
     private ArrayList<Double> b;
     private final ArrayList<Double> x;
