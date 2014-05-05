@@ -6,10 +6,13 @@
 package com.fii.homework.SparseMatrix.models;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 
 import com.fii.homework.SparseMatrix.utils.MatrixBuildUtil;
+import com.fii.homework.SparseMatrix.utils.MatrixOpUtils;
+import com.fii.homework.SparseMatrix.utils.VectorBuildUtils;
 import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 
 /**
@@ -18,6 +21,8 @@ import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 public class PowerMethod {
     private DoubleSparseMatrix A;
     private Double[] v;
+    private final short kMax = 100;
+    private final double eps = Math.pow(1, -10);
     
     public PowerMethod() {
     }
@@ -107,12 +112,44 @@ public class PowerMethod {
     }
     
     public void solve() {
+	Class<Double> type = Double.class;
 	try {
 	    if (A != null) {
 		int size = A.getSize();
 		generateVector(size);
-		//as
-		//asdas
+		
+		ArrayList<ArrayList<Double>> vAsRowMatrix = VectorBuildUtils.getRowMatrixFromArrayVector(v, type);
+		ArrayList<ArrayList<Double>> vAsColMatrix = MatrixBuildUtil.getTranspose(vAsRowMatrix, type);
+		ArrayList<ArrayList<Double>> w = MatrixOpUtils.mulSparseMatrixWithArrayMatrix(A, vAsColMatrix, type);
+		
+		Double lambda = MatrixOpUtils.mul(w, vAsRowMatrix, type).get(0).get(0);
+		int k = 0;
+		
+		boolean cond1, cond2;
+		
+		do {
+		    ArrayList<ArrayList<Double>> lambdaMulV = MatrixOpUtils.mulScalarWithMatrix(lambda, vAsColMatrix, type);
+		    ArrayList<ArrayList<Double>> wSubsLambdaMulV = MatrixOpUtils.sub(w, lambdaMulV, type);
+		    ArrayList<Double> substracted = MatrixBuildUtil.getTranspose(wSubsLambdaMulV, type).get(0);
+		    Double testNorm = VectorOpUtils.getEuclidianNorm(substracted, type);
+		    
+		    Double norm = VectorOpUtils.getEuclidianNorm(MatrixBuildUtil.getTranspose(w, type).get(0), type);
+		    vAsColMatrix = MatrixOpUtils.mulScalarWithMatrix(norm, w, type);
+		    vAsRowMatrix = MatrixBuildUtil.getTranspose(vAsColMatrix, type);
+		    
+		    w = MatrixOpUtils.mulSparseMatrixWithArrayMatrix(A, vAsColMatrix, type);
+		    lambda = MatrixOpUtils.mul(w, vAsRowMatrix, type).get(0).get(0);
+		    k++;
+		    cond1 = testNorm > size * eps;
+		    cond2 = k <= kMax;
+		} while (cond1 && cond2);
+		
+		if (!cond1) {
+		    Logger.getLogger(PowerMethod.class.getSimpleName()).info("eigenvector computed: " + vAsRowMatrix);
+		}
+		if (!cond2) {
+		    Logger.getLogger(PowerMethod.class.getSimpleName()).info("cannot compute value");
+		}
 	    } else {
 		throw new NullPointerException();
 	    }
