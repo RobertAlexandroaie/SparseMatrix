@@ -2,7 +2,7 @@
 package com.fii.homework.SparseMatrix.main;
 
 
-import com.fii.homework.SparseMatrix.utils.PowerMethod;
+import com.fii.homework.SparseMatrix.models.PowerMethod;
 import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 
 /**
