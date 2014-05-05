@@ -16,7 +16,7 @@ import com.fii.homework.SparseMatrix.utils.MatrixOpUtils;
 /**
  * @author Claudiu
  */
-public class SimpleValueDecomp {
+public class SingularValueDecomp {
     
     private final SimpleMatrix matrix;
     private final SimpleMatrix b;
@@ -28,7 +28,7 @@ public class SimpleValueDecomp {
     private double cond = Double.MIN_VALUE;
     private double norm = Double.MIN_VALUE;
     
-    public SimpleValueDecomp(int n, int p) {
+    public SingularValueDecomp(int n, int p) {
 	matrix = new SimpleMatrix(n, p);
 	b = new SimpleMatrix(n, 1);
 	nrLines = n;
