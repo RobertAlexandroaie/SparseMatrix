@@ -24,55 +24,48 @@ public class PowerMethod {
     private final short kMax = 100;
     private final double eps = Math.pow(1, -10);
     
-    public PowerMethod() {
-    }
-    
-    public void generateSquareSymmetricAndSparseMatrix(Integer matrixSize) {
+    public void createSquareSymmetricSparseMatrix(int size) {
 	
-	A = (DoubleSparseMatrix) MatrixBuildUtil.buildEmptySparseMatrix(matrixSize);
-	for (int i = 0; i < matrixSize; i++) {
-	    for (int j = 0; j < matrixSize; j++) {
-		getMatrix().setElement(i, j, 0.0);
-	    }
-	}
+	A = (DoubleSparseMatrix) MatrixBuildUtil.buildEmptySparseMatrix(size);
+	
 	// compute maximum number of not null  elements that can exist in matrix
-	Double a = (Math.pow(new Double(matrixSize), 2) * 50 / 100) / 2;
-	Integer maxNumberElements = ((int) a.doubleValue());
-	Integer numberOfElements = maxNumberElements / 2 + (int) (Math.random() * (maxNumberElements - maxNumberElements / 2) + 1);
+	double a = (Math.pow(new Double(size), 2) * 50 / 100) / 2;
+	int maxNumberElements = ((int) a);
+	int numberOfElements = maxNumberElements / 2 + (int) (Math.random() * (maxNumberElements - maxNumberElements / 2) + 1);
 	
 	// generate elements
 	Random generator = new Random();
 	
-	int numberOfDiagElementsThatCanBeFilled = (numberOfElements > matrixSize) ? matrixSize : numberOfElements;
+	int numberOfDiagElementsThatCanBeFilled = (numberOfElements > size) ? size : numberOfElements;
+	
 	//generate elements on main diagonal
-	for (int i = 0; i < numberOfDiagElementsThatCanBeFilled; i++) {
-	    getMatrix().setElement(i, i, generator.nextDouble() * 10);
+	for (int i = 0; i < size; i++) {
+	    A.setElement(i, i, generator.nextDouble() * 10);
 	}
 	
 	numberOfElements -= numberOfDiagElementsThatCanBeFilled;
 	if (numberOfElements > 0) {
-	    
-	    if (numberOfElements < matrixSize) {
+	    if (numberOfElements < size) {
 		for (int i = 0; i < numberOfElements; i++) {
-		    int column = generator.nextInt(matrixSize);
+		    int column = generator.nextInt(size);
 		    double element = generator.nextDouble() * 10;
-		    getMatrix().setElement(i, column, element);
-		    getMatrix().setElement(column, i, element);
+		    A.setElement(i, column, element);
+		    A.setElement(column, i, element);
 		}
 	    } else {
-		Integer maxNumberOfElementsPerLine = ((int) new Double(Math.ceil(numberOfElements / matrixSize)).doubleValue());
-		Integer line = new Integer(0);
-		while (line < matrixSize) {
+		int maxNumberOfElementsPerLine = ((int) (Math.ceil(numberOfElements / size)));
+		int line = new Integer(0);
+		while (line < size) {
 		    for (int i = 0; i < maxNumberOfElementsPerLine; i++) {
 			boolean insert = false;
 			while (!insert) {
-			    Integer column = generator.nextInt(matrixSize);
+			    int column = generator.nextInt(size);
 			    if (line != column) {
-				if (getMatrix().getElement(line, column) == 0.0) {
+				if (A.getElement(line, column) == 0.0) {
 				    insert = true;
-				    Double element = generator.nextDouble() * 10;
-				    getMatrix().setElement(line, column, element);
-				    getMatrix().setElement(column, line, element);
+				    double element = generator.nextDouble() * 10;
+				    A.setElement(line, column, element);
+				    A.setElement(column, line, element);
 				    insert = true;
 				}
 			    }
@@ -82,32 +75,31 @@ public class PowerMethod {
 		}
 	    }
 	}
-	generateVector(matrixSize);
     }
     
-    private void generateVector(int matrixSize) {
+    public void createRandomVector(int matrixSize) {
 	v = new Double[matrixSize];
 	Random random = new Random();
 	for (int i = 0; i < matrixSize; i++) {
 	    v[i] = (double) random.nextInt(100);
 	}
-	Double euclidianNorm = VectorOpUtils.getEuclidianNorm(getRandomVector(), Double.class);
+	Double euclidianNorm = VectorOpUtils.getEuclidianNorm(getV(), Double.class);
 	for (int i = 0; i < matrixSize; i++) {
-	    v[i] = (1 / euclidianNorm) * getRandomVector()[i];
+	    v[i] = (1 / euclidianNorm) * getV()[i];
 	}
     }
     
     /**
      * @return the matrix
      */
-    public DoubleSparseMatrix getMatrix() {
+    public DoubleSparseMatrix getA() {
 	return A;
     }
     
     /**
      * @return the randomVector
      */
-    public Double[] getRandomVector() {
+    public Double[] getV() {
 	return v;
     }
     
@@ -116,7 +108,7 @@ public class PowerMethod {
 	try {
 	    if (A != null) {
 		int size = A.getSize();
-		generateVector(size);
+		createRandomVector(size);
 		
 		ArrayList<ArrayList<Double>> vAsRowMatrix = VectorBuildUtils.getRowMatrixFromArrayVector(v, type);
 		ArrayList<ArrayList<Double>> vAsColMatrix = MatrixBuildUtil.getTranspose(vAsRowMatrix, type);

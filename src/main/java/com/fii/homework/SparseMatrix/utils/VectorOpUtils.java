@@ -36,7 +36,7 @@ public class VectorOpUtils {
 	Double euclidianNorm = 0.0;
 	T sum = ElementOpUtils.getNeutralSumElem(type);
 	for (int i = 0; i < vector.size(); i++) {
-	    ElementOpUtils.sum(sum, ElementOpUtils.mul(vector.get(i), vector.get(i), type), type);
+	    sum = ElementOpUtils.sum(sum, ElementOpUtils.mul(vector.get(i), vector.get(i), type), type);
 	}
 	euclidianNorm = Math.sqrt((Double) sum);
 	return euclidianNorm;

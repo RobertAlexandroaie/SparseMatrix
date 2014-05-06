@@ -159,16 +159,22 @@ public class DoubleSparseMatrix implements SparseMatrix {
 	if (row == column) {
 	    return diag.get(row);
 	} else {
-	    for (String line : colIndexes.get(column)) {
-		if (line.endsWith("|" + row)) {
-		    index = Integer.parseInt(line.split("\\|")[0]);
-		    elementIsZero = false;
-		    break;
+	    ArrayList<String> rowInColIndexes = colIndexes.get(column);
+	    if (rowIndexes != null && colIndexes != null && rowInColIndexes != null) {
+		for (String line : colIndexes.get(column)) {
+		    if (line.endsWith("|" + row)) {
+			index = Integer.parseInt(line.split("\\|")[0]);
+			elementIsZero = false;
+			break;
+		    }
+		    
 		}
-	    }
-	    
-	    if (!elementIsZero) {
-		return values.get(index);
+		
+		if (!elementIsZero) {
+		    return values.get(index);
+		} else {
+		    return 0.0;
+		}
 	    } else {
 		return 0.0;
 	    }
@@ -188,6 +194,18 @@ public class DoubleSparseMatrix implements SparseMatrix {
 	    stringToReturn.append(value + "\n");
 	}
 	return stringToReturn.toString();
+    }
+    
+    public void printAsArray() {
+	double[][] arrayMatrix = asArray();
+	int rows = arrayMatrix.length;
+	int cols = arrayMatrix[0].length;
+	for (int i = 0; i < rows; i++) {
+	    for (int j = 0; j < cols; j++) {
+		System.out.print(String.format("(%d,%d)%-18f", i, j, arrayMatrix[i][j]));
+	    }
+	    System.out.println("");
+	}
     }
     
     /*
@@ -267,19 +285,20 @@ public class DoubleSparseMatrix implements SparseMatrix {
     @Override
     public double[][] asArray() {
 	double[][] result = new double[size][size];
-	
 	for (int col = 0; col < size; col++) {
 	    result[col][col] = diag.get(col);
-	    ArrayList<String> rowInColIndexes = colIndexes.get(col);
-	    for (String line : rowInColIndexes) {
-		String vals[] = line.split("\\|");
-		int index = Integer.parseInt(vals[0]);
-		int row = Integer.parseInt(vals[1]);
-		result[row][col] = values.get(index);
+	    if (colIndexes != null & rowIndexes != null) {
+		ArrayList<String> rowInColIndexes = colIndexes.get(col);
+		if (rowInColIndexes != null) {
+		    for (String line : rowInColIndexes) {
+			String vals[] = line.split("\\|");
+			int index = Integer.parseInt(vals[0]);
+			int row = Integer.parseInt(vals[1]);
+			result[row][col] = values.get(index);
+		    }
+		}
 	    }
-	    
 	}
-	
 	return result;
     }
     
