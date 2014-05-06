@@ -124,28 +124,27 @@ public class MatrixOpUtils {
 	    }
 	    
 	    ArrayList<ArrayList<Integer>> rowIndexes = getClone(a.getRowIndexes(), Integer.class);
-	    ArrayList<ArrayList<String>> colIndexes = getClone(a.getColIndexes(), String.class);
 	    ArrayList<Double> values = VectorOpUtils.getClone(a.getValues(), Double.class);
 	    Collections.fill(values, 0.0);
 	    
-	    int size = a.getSize();
+	    int rows = a.getSize();
+	    int cols = b.get(0).size();
+	    Logger.getLogger(MatrixOpUtils.class.getSimpleName()).info("sorted indexes");
 	    
-	    for (int i = 0; i < size; i++) {
-		Collections.sort(rowIndexes.get(0));
-		Collections.sort(colIndexes.get(0));
-	    }
-	    
-	    for (int i = 0; i < size; i++) {
+	    for (int i = 0; i < rows; i++) {
 		ArrayList<Integer> row = rowIndexes.get(i);
-		ArrayList<T> rowToAdd = new ArrayList<>();
-		T elem = ElementOpUtils.getNeutralSumElem(type);
-		elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(i, i), (T) b.get(i).get(0), type), type);
-		for (Integer k : row) {
-		    elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(i, k), (T) b.get(i).get(0), type), type);
+		if (row != null) {
+		    ArrayList<T> rowToAdd = new ArrayList<>();
+		    for (int col = 0; col < cols; col++) {
+			T elem = ElementOpUtils.getNeutralSumElem(type);
+			elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(i, i), (T) b.get(i).get(col), type), type);
+			for (Integer k : row) {
+			    elem = ElementOpUtils.sum(elem, ElementOpUtils.mul((T) a.getElement(i, k), (T) b.get(k).get(col), type), type);
+			}
+			rowToAdd.add(elem);
+		    }
+		    result.add(rowToAdd);
 		}
-		rowToAdd.add(elem);
-		
-		result.add(rowToAdd);
 	    }
 	    return result;
 	} catch (NullPointerException e) {
@@ -169,7 +168,7 @@ public class MatrixOpUtils {
 	    
 	    int size = a.getSize();
 	    
-	    result = MatrixBuildUtil.buildEmptySparseMatrix(size);
+	    result = MatrixBuildUtils.buildEmptySparseMatrix(size);
 	    
 	    ArrayList<ArrayList<Integer>> aRowIndexes = getClone(a.getRowIndexes(), Integer.class);
 	    
@@ -231,8 +230,14 @@ public class MatrixOpUtils {
     
     public static <T> ArrayList<ArrayList<T>> getClone(ArrayList<ArrayList<T>> matrix, Class<T> type) {
 	ArrayList<ArrayList<T>> clone = new ArrayList<ArrayList<T>>();
-	for (ArrayList<T> row : matrix) {
-	    clone.add(new ArrayList<T>(row));
+	
+	if (matrix == null || matrix.get(0) == null) {
+	    Logger.getLogger(MatrixOpUtils.class.getSimpleName()).warning("matrix null or contains null" + matrix);
+	} else {
+	    
+	    for (ArrayList<T> row : matrix) {
+		clone.add(new ArrayList<T>(row));
+	    }
 	}
 	return clone;
     }

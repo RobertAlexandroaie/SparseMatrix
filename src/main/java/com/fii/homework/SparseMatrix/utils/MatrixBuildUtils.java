@@ -20,7 +20,7 @@ import com.fii.homework.SparseMatrix.models.interfaces.SparseMatrix;
 /**
  * @author Robert
  */
-public class MatrixBuildUtil {
+public class MatrixBuildUtils {
     
     private static void buildB(ArrayList<Double> b, BufferedReader buffReader, int size) throws NumberFormatException, IOException {
 	for (int i = 0; i < size; i++) {
@@ -83,6 +83,10 @@ public class MatrixBuildUtil {
 	}
     }
     
+    private static void buildMatrix(String filename) {
+	
+    }
+    
     public static SparseMatrix buildEmptySparseMatrix(int size) {
 	SparseMatrix result = null;
 	
@@ -136,20 +140,20 @@ public class MatrixBuildUtil {
 	    system.setMatrixC(matrixC);
 	    
 	} catch (FileNotFoundException e) {
-	    Logger.getLogger(MatrixBuildUtil.class.getSimpleName()).warning("the file doesn't exist");
+	    Logger.getLogger(MatrixBuildUtils.class.getSimpleName()).warning("the file doesn't exist");
 	    e.printStackTrace();
 	} catch (NumberFormatException e) {
-	    Logger.getLogger(MatrixBuildUtil.class.getSimpleName()).warning("cannot parse string to number");
+	    Logger.getLogger(MatrixBuildUtils.class.getSimpleName()).warning("cannot parse string to number");
 	    e.printStackTrace();
 	} catch (IOException e) {
-	    Logger.getLogger(MatrixBuildUtil.class.getSimpleName()).warning("cannot read line");
+	    Logger.getLogger(MatrixBuildUtils.class.getSimpleName()).warning("cannot read line");
 	    e.printStackTrace();
 	} finally {
 	    if (buffReader != null) {
 		try {
 		    buffReader.close();
 		} catch (IOException e) {
-		    Logger.getLogger(MatrixBuildUtil.class.getSimpleName()).warning("cannot close buff reader");
+		    Logger.getLogger(MatrixBuildUtils.class.getSimpleName()).warning("cannot close buff reader");
 		    e.printStackTrace();
 		}
 	    }

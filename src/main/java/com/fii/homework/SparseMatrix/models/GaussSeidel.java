@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.fii.homework.SparseMatrix.models.interfaces.SparseMatrix;
-import com.fii.homework.SparseMatrix.utils.MatrixBuildUtil;
+import com.fii.homework.SparseMatrix.utils.MatrixBuildUtils;
 import com.fii.homework.SparseMatrix.utils.MatrixOpUtils;
 
 /**
@@ -28,7 +28,7 @@ public class GaussSeidel {
     private final double epsilon = 1.0 * Math.pow(10, -12);
     
     public GaussSeidel(String filename) {
-	MatrixBuildUtil.buildSystemFromFile(filename, this);
+	MatrixBuildUtils.buildSystemFromFile(filename, this);
 	int size = matrixA.getSize();
 	x = new ArrayList<Double>(size);
 	for (int i = 0; i < size; i++) {
@@ -151,12 +151,12 @@ public class GaussSeidel {
 	ArrayList<ArrayList<Double>> solutionAsMatrix = new ArrayList<ArrayList<Double>>();
 	solutionAsMatrix.add(x);
 	
-	ArrayList<ArrayList<Double>> solutionT = MatrixBuildUtil.getTranspose(solutionAsMatrix, Double.class);
+	ArrayList<ArrayList<Double>> solutionT = MatrixBuildUtils.getTranspose(solutionAsMatrix, Double.class);
 	ArrayList<ArrayList<Double>> Axsol = MatrixOpUtils.mulSparseMatrixWithArrayMatrix(matrixA, solutionT, Double.class);
 	
 	ArrayList<ArrayList<Double>> bT = new ArrayList<ArrayList<Double>>();
 	bT.add(b);
-	bT = MatrixBuildUtil.getTranspose(bT, Double.class);
+	bT = MatrixBuildUtils.getTranspose(bT, Double.class);
 	
 	ArrayList<ArrayList<Double>> diff = MatrixOpUtils.sub(Axsol, bT, Double.class);
 	double norm = MatrixOpUtils.getNorm1(diff);

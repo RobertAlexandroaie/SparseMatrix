@@ -8,7 +8,7 @@ package com.fii.homework.SparseMatrix.models;
 import java.util.ArrayList;
 
 import com.fii.homework.SparseMatrix.models.interfaces.SparseMatrix;
-import com.fii.homework.SparseMatrix.utils.MatrixBuildUtil;
+import com.fii.homework.SparseMatrix.utils.MatrixBuildUtils;
 import com.fii.homework.SparseMatrix.utils.MatrixOpUtils;
 import com.fii.homework.SparseMatrix.utils.VectorOpUtils;
 
@@ -127,7 +127,7 @@ public class DoubleSparseMatrix implements SparseMatrix {
      */
     @Override
     public SparseMatrix BMatrix() {
-	return MatrixBuildUtil.BMatrix(this);
+	return MatrixBuildUtils.BMatrix(this);
     }
     
     /*
@@ -138,7 +138,7 @@ public class DoubleSparseMatrix implements SparseMatrix {
      */
     @Override
     public SparseMatrix CMatrix() {
-	return MatrixBuildUtil.CMatrix(this);
+	return MatrixBuildUtils.CMatrix(this);
     }
     
     @Override

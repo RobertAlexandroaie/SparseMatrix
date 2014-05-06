@@ -10,8 +10,11 @@ import com.fii.homework.SparseMatrix.models.PowerMethod;
 public class App {
     public static void main(String[] args) {
 	
-	PowerMethod powerMethod = new PowerMethod();
-	powerMethod.createSquareSymmetricSparseMatrix(10);
+	PowerMethod powerMethod = null;
+	powerMethod = new PowerMethod("test.txt");
+	
+//	powerMethod = new PowerMethod();
+//	powerMethod.createSquareSymmetricSparseMatrix(500);
 	powerMethod.solve();
 	
     }

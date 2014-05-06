@@ -17,7 +17,7 @@ public class VectorBuildUtils {
 	List<T> vAsList = Arrays.asList(vector);
 	ArrayList<ArrayList<T>> vAsMatrix = new ArrayList<ArrayList<T>>();
 	vAsMatrix.add(new ArrayList<T>(vAsList));
-	ArrayList<ArrayList<T>> vAsColMatrix = MatrixBuildUtil.getTranspose(vAsMatrix, type);
+	ArrayList<ArrayList<T>> vAsColMatrix = MatrixBuildUtils.getTranspose(vAsMatrix, type);
 	
 	return vAsColMatrix;
     }
